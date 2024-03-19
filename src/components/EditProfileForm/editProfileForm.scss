@@ -1,0 +1,91 @@
+@import "@styles/variables";
+
+.edit-profile-form {
+  background-color: $secondary-color;
+  gap: 5rem;
+  margin: 3rem 0;
+  padding: 5rem 8rem;
+
+  &__container {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    justify-content: space-between;
+  }
+
+  &__info-wrapper {
+    flex-grow: 1;
+  }
+
+  &__image-wrapper {
+    flex-grow: 1;
+  }
+
+  &__label {
+    display: block;
+    font-weight: $font-weight-bold;
+    margin-top: 1.25rem;
+  }
+
+  &__input,
+  &__textarea {
+    border-radius: 0.313rem;
+    border: 0.125rem solid $black-color-200;
+    font-size: 1rem;
+    padding: 0.75rem;
+    width: 100%;
+
+    &__field {
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  &__textarea {
+    min-height: 12.5rem;
+  }
+
+  &__image-preview {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+  }
+
+  &__image-name {
+    background: $primary-color;
+    border-radius: 0.313rem;
+    border: 0.125rem solid $black-color-200;
+    flex-grow: 1;
+    padding: 0.7rem;
+  }
+
+  &__preview-image {
+    border-radius: 50%;
+    height: 4rem;
+    width: 4rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  &__submit-button {
+    background-color: $color-purple;
+    border-radius: 0.313rem;
+    border: 0.063rem solid $black-color-200;
+    color: $primary-color;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+  }
+
+  &__cancel-button {
+    border-radius: 0.313rem;
+    border: 0.063rem solid $black-color-200;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+  }
+}

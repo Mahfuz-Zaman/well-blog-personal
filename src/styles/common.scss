@@ -1,0 +1,16 @@
+.container {
+  margin: 0 auto 2rem;
+  max-width: 60%;
+}
+
+.button-holder {
+  display: flex;
+  gap: 1rem;
+  justify-content: end;
+}
+
+.common-title-filter-holder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

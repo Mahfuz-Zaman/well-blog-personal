@@ -1,0 +1,17 @@
+@import "@styles/variables";
+
+.filter-blogs {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: $font-weight-semi-bold;
+  min-width: 45%;
+
+  &__label {
+    margin-right: 0.625rem;
+  }
+
+  &__select-box {
+    flex: 1 0;
+  }
+}

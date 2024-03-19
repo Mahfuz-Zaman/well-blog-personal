@@ -1,0 +1,74 @@
+@import "@styles/variables";
+@import "@styles/constants";
+
+.blog-form {
+  background: $secondary-color;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 3rem 0;
+  padding: 8rem;
+
+  &__title-container {
+    flex: 1 0;
+  }
+
+  &__tag-container {
+    flex: 1 0;
+  }
+
+  &__title-tag-wrapper {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  &__label {
+    display: inline-block;
+    font-weight: $font-weight-bold;
+    margin-bottom: 1rem;
+  }
+
+  &__input {
+    border-radius: 0.25rem;
+    border: 0.125rem solid $black-color-200;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    width: 100%;
+  }
+
+  &__textarea {
+    border-radius: 0.25rem;
+    border: 0.125rem solid $black-color-200;
+    height: 12.5rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    gap: 1rem;
+    justify-content: center;
+
+    &-submit {
+      background-color: $link-color;
+      border-radius: 0.25rem;
+      border: 0.063rem solid $black-color-200;
+      color: $primary-color;
+      font-weight: $font-weight-black;
+      padding: 0.6rem 1.7rem;
+    }
+
+    &-cancel {
+      background-color: $secondary-color;
+      border-radius: 0.25rem;
+      border: 0.063rem solid $black-color-200;
+      font-weight: $font-weight-black;
+      padding: 0.6rem 1.7rem;
+    }
+  }
+}

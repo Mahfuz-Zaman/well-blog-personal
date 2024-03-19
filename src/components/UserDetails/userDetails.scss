@@ -1,0 +1,55 @@
+@import "@styles/variables";
+
+.user-details {
+  background-color: $secondary-color;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  margin: 1rem 0;
+  padding: 3rem;
+  text-align: center;
+
+  &__identity {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    &-image {
+      border-radius: 50%;
+      height: 4rem;
+      margin-right: 1rem;
+      width: 4rem;
+    }
+  }
+
+  &__info {
+    text-align: left;
+  }
+
+  &__fullname {
+    font-size: 1.25rem;
+    font-weight: $font-weight-medium;
+    text-transform: capitalize;
+  }
+
+  &__subtitle {
+    color: $dim-color;
+    font-size: 0.875rem;
+    font-weight: $font-weight-normal;
+    text-transform: capitalize;
+  }
+
+  &__about {
+    font-size: 1.125rem;
+    font-weight: $font-weight-normal;
+    line-height: 1.625rem;
+    margin: auto;
+  }
+
+  &__social-media {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,19 @@
+@import "@styles/variables";
+
+.blog-list {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  margin: 1rem auto;
+
+  &__button {
+    align-items: center;
+    border-radius: 0.25rem;
+    border: 0.063rem solid $black-color-200;
+    display: flex;
+    font-size: 0.9rem;
+    justify-content: center;
+    margin: auto;
+    padding: 0.6rem 1rem;
+  }
+}

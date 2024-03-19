@@ -1,0 +1,145 @@
+@import "@styles/variables";
+
+.banner {
+  border-radius: 0.5rem;
+  position: relative;
+
+  &__image {
+    border-radius: 0.5rem;
+    height: 28rem;
+    margin-bottom: 4rem;
+    width: 100%;
+  }
+
+  &__auth-info-wrapper {
+    color: $primary-color;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 2rem;
+    position: absolute;
+    top: 14rem;
+    width: 40%;
+
+    &-heading {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 2rem;
+
+      &-category-badge {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      &__tag {
+        background-color: $color-blue;
+        border-radius: 0.3rem;
+        padding: 0.5rem;
+        text-align: center;
+        width: fit-content;
+      }
+
+      &-title {
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        font-size: 1.125rem;
+        font-weight: $font-weight-bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+      }
+    }
+
+    &-identity {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      &-image {
+        border-radius: 50%;
+        height: 2rem;
+        width: 2rem;
+      }
+
+      &-name {
+        font-weight: $font-weight-bold;
+        margin-bottom: 0.25rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+
+  &__info-wrapper {
+    background-color: $primary-color;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.313rem 0.313rem 0 $black-color-200;
+    color: $color-black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1rem;
+    left: 3rem;
+    padding: 2rem;
+    position: absolute;
+    top: 17rem;
+    width: 40%;
+
+    &-heading {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 2rem;
+
+      &-category-badge {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      &__tag {
+        background-color: $color-blue;
+        border-radius: 0.3rem;
+        color: $primary-color;
+        padding: 0.5rem;
+        text-align: center;
+        width: fit-content;
+      }
+
+      &-title {
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        font-size: 1.125rem;
+        font-weight: $font-weight-bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+      }
+    }
+
+    &-identity {
+      align-items: center;
+      color: $dim-color;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      &-image {
+        border-radius: 50%;
+        height: 2rem;
+        width: 2rem;
+      }
+
+      &-name {
+        font-weight: $font-weight-bold;
+        margin-bottom: 0.25rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

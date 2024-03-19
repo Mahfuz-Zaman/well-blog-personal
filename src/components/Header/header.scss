@@ -1,0 +1,37 @@
+@import "@styles/variables";
+
+.navbar {
+  align-items: center;
+  background-color: $primary-color;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem 0;
+
+  &__logo {
+    color: $color-black;
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    text-decoration: none;
+  }
+
+  &__user-name {
+    color: $link-color;
+    text-transform: capitalize;
+  }
+
+  &__menu {
+    align-items: center;
+    display: flex;
+    font-size: 1.2rem;
+
+    a {
+      color: $link-color;
+      text-decoration: none;
+    }
+
+    span {
+      margin: 0 1rem;
+    }
+  }
+}
