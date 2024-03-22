@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { Form, Field } from "react-final-form";
-import { useDispatch, useSelector } from "react-redux";
-// import { updateUserProfile } from "@actions/authActions";
+import { updateUser } from "@actions/authActions";
 import Button from "@components/Button/Button";
-import ImageDnD from "@components/ImageDnD/ImageDnD";
 import "@components/EditProfileForm/editProfileForm.scss";
-import supabase from "./../../app/supabase";
-import { v4 as uuidv4 } from "uuid";
+import ImageDnD from "@components/ImageDnD/ImageDnD";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { Field, Form } from "react-final-form";
+import { useDispatch, useSelector } from "react-redux";
 
 const EditProfileForm = ({ onSetEditProfileVisibility }) => {
   const { loggedInUser } = useSelector((state) => state.auth);
   const blog = useSelector((state) => state.blog);
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
+  const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState("");
   const [loggedInUserInfo, setLoggedInUserInfo] = useState(null);
   const [userId, setUserId] = useState("");
@@ -27,21 +26,6 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
     setLoggedInUserInfo(loggedInUser.user_metadata);
   }, [loggedInUser]);
 
-  const updateUserInfo = async ({ formData }) => {
-    // const { data, error } = await supabase.auth.updateUser({
-    //   ...setLoggedInUserInfo,
-    //   data: formData,
-    // });
-
-    const { data: image, error: imageError } = await supabase.storage
-      .from("avatars")
-      .upload(`${imageName}`, image);
-
-    console.log(image);
-
-    // localStorage.setItem("loggedInUser", JSON.stringify(data.user));
-  };
-
   const resetForm = (form) => {
     form.reset({
       fullName: loggedInUser?.fullName || "",
@@ -53,10 +37,8 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
     setImageName("");
   };
 
-  const onSubmit = (values, form) => {
-    const updatedValues = { ...values, profileImage: imagePreview };
-
-    updateUserInfo(updatedValues);
+  const onSubmit = async (values, form) => {
+    dispatch(updateUser(values, image));
     resetForm(form);
     onSetEditProfileVisibility(false);
   };
@@ -66,22 +48,11 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
     onSetEditProfileVisibility(false);
   };
 
-  const handleImageDrop = async (acceptedFiles) => {
+  const handleImageDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    const fileName = file.name;
-
-    const { data: image, error: imageError } = await supabase.storage
-      .from("avatars")
-      .upload(fileName, file);
-
-    // onUpload(filePath);
-    // setUploading(false);
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   setImagePreview(reader.result);
-    //   setImageName(file.name);
-    // };
-    // reader.readAsDataURL(file);
+    setImage(file);
+    setImagePreview(URL.createObjectURL(file));
+    setImageName(file.name);
   };
 
   return (
@@ -95,74 +66,74 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
         about: loggedInUserInfo?.about || "",
       }}
       render={({ handleSubmit, form }) => (
-        <form className="edit-profile-form" onSubmit={handleSubmit}>
-          <div className="edit-profile-form__container">
-            <div className="edit-profile-form__info-wrapper">
-              <div className="edit-profile-form__field">
-                <label className="edit-profile-form__label">Name</label>
+        <form className='edit-profile-form' onSubmit={handleSubmit}>
+          <div className='edit-profile-form__container'>
+            <div className='edit-profile-form__info-wrapper'>
+              <div className='edit-profile-form__field'>
+                <label className='edit-profile-form__label'>Name</label>
                 <Field
-                  name="fullName"
-                  component="input"
-                  type="text"
-                  placeholder="Name"
-                  className="edit-profile-form__input"
+                  name='fullName'
+                  component='input'
+                  type='text'
+                  placeholder='Name'
+                  className='edit-profile-form__input'
                 />
               </div>
-              <div className="edit-profile-form__field">
-                <label className="edit-profile-form__label">Subtitle</label>
+              <div className='edit-profile-form__field'>
+                <label className='edit-profile-form__label'>Subtitle</label>
                 <Field
-                  name="subtitle"
-                  component="input"
-                  type="text"
-                  placeholder="Subtitle"
-                  className="edit-profile-form__input"
+                  name='subtitle'
+                  component='input'
+                  type='text'
+                  placeholder='Subtitle'
+                  className='edit-profile-form__input'
                 />
               </div>
-              <div className="edit-profile-form__field">
-                <label className="edit-profile-form__label">About</label>
+              <div className='edit-profile-form__field'>
+                <label className='edit-profile-form__label'>About</label>
                 <Field
-                  name="about"
-                  component="textarea"
-                  placeholder="About"
-                  className="edit-profile-form__textarea"
+                  name='about'
+                  component='textarea'
+                  placeholder='About'
+                  className='edit-profile-form__textarea'
                 />
               </div>
             </div>
-            <div className="edit-profile-form__image-wrapper">
-              <div className="edit-profile-form__field">
-                <label className="edit-profile-form__label">
+            <div className='edit-profile-form__image-wrapper'>
+              <div className='edit-profile-form__field'>
+                <label className='edit-profile-form__label'>
                   Profile Image
                 </label>
                 <ImageDnD onDrop={handleImageDrop} />
               </div>
-              <div className="edit-profile-form__image-preview">
+              <div className='edit-profile-form__image-preview'>
                 {imageName && (
-                  <span className="edit-profile-form__image-name">
+                  <span className='edit-profile-form__image-name'>
                     {imageName}
                   </span>
                 )}
                 {imagePreview && (
                   <img
                     src={imagePreview}
-                    alt="Profile Preview"
-                    className="edit-profile-form__preview-image"
+                    alt='Profile Preview'
+                    className='edit-profile-form__preview-image'
                   />
                 )}
               </div>
             </div>
           </div>
-          <div className="edit-profile-form__buttons">
+          <div className='edit-profile-form__buttons'>
             <Button
               onClick={handleSubmit}
-              type="submit"
-              className="edit-profile-form__submit-button"
+              type='submit'
+              className='edit-profile-form__submit-button'
             >
               Submit
             </Button>
             <Button
               onClick={() => onCancel(form)}
-              type="button"
-              className="edit-profile-form__cancel-button"
+              type='button'
+              className='edit-profile-form__cancel-button'
             >
               Cancel
             </Button>

@@ -1,42 +1,37 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import defaultUserImage from "@assets/images/icons/defaultUserImage.svg";
 import facebook from "@assets/images/icons/facebook.png";
-import twitter from "@assets/images/icons/twitter.png";
 import instagram from "@assets/images/icons/instagram.png";
+import twitter from "@assets/images/icons/twitter.png";
 import youtube from "@assets/images/icons/youtube.png";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import getImagePath from "../../helpers/getImagePath";
 import "@components/UserDetails/userDetails.scss";
 
 const UserDetails = () => {
   const { loggedInUser } = useSelector((state) => state.auth);
-  const { fullName, profileImage, subtitle, about } = loggedInUser;
+  const { fullName, profileImage, subtitle, about } =
+    loggedInUser?.user_metadata || {};
 
   return (
-    <section className="user-details">
-      <div className="user-details__identity">
+    <section className='user-details'>
+      <div className='user-details__identity'>
         <img
-          className="user-details__identity-image"
-          src={loggedInUser.profileImage ? profileImage : defaultUserImage}
-          alt="Profile Picture"
+          className='user-details__identity-image'
+          src={getImagePath(profileImage) || defaultUserImage}
+          alt='Profile Picture'
         />
-        <div className="user-details__info">
-          <h2 className="user-details__fullname">
-            {loggedInUser?.user_metadata?.fullName}
-          </h2>
-          <p className="user-details__subtitle">
-            {loggedInUser?.user_metadata?.subtitle}
-          </p>
+        <div className='user-details__info'>
+          <h2 className='user-details__fullname'>{fullName}</h2>
+          <p className='user-details__subtitle'>{subtitle}</p>
         </div>
       </div>
-      <p className="user-details__about">
-        {loggedInUser?.user_metadata?.about}
-      </p>
-      <div className="user-details__social-media">
-        <img src={facebook} alt="facebook" />
-        <img src={twitter} alt="twitter" />
-        <img src={instagram} alt="instagram" />
-        <img src={youtube} alt="youtube" />
+      <p className='user-details__about'>{about}</p>
+      <div className='user-details__social-media'>
+        <img src={facebook} alt='facebook' />
+        <img src={twitter} alt='twitter' />
+        <img src={instagram} alt='instagram' />
+        <img src={youtube} alt='youtube' />
       </div>
     </section>
   );
