@@ -21,11 +21,17 @@ const UserDetails = () => {
           alt="Profile Picture"
         />
         <div className="user-details__info">
-          <h2 className="user-details__fullname">{fullName}</h2>
-          <p className="user-details__subtitle">{subtitle}</p>
+          <h2 className="user-details__fullname">
+            {loggedInUser?.user_metadata?.fullName}
+          </h2>
+          <p className="user-details__subtitle">
+            {loggedInUser?.user_metadata?.subtitle}
+          </p>
         </div>
       </div>
-      <p className="user-details__about">{about}</p>
+      <p className="user-details__about">
+        {loggedInUser?.user_metadata?.about}
+      </p>
       <div className="user-details__social-media">
         <img src={facebook} alt="facebook" />
         <img src={twitter} alt="twitter" />

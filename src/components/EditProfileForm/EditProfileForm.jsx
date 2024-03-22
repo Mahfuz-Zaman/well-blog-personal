@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Form, Field } from "react-final-form";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "@actions/authActions";
+// import { updateUserProfile } from "@actions/authActions";
 import Button from "@components/Button/Button";
 import ImageDnD from "@components/ImageDnD/ImageDnD";
 import "@components/EditProfileForm/editProfileForm.scss";
+import supabase from "./../../app/supabase";
+import { v4 as uuidv4 } from "uuid";
 
 const EditProfileForm = ({ onSetEditProfileVisibility }) => {
   const { loggedInUser } = useSelector((state) => state.auth);
@@ -13,12 +15,32 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
   const dispatch = useDispatch();
   const [imagePreview, setImagePreview] = useState(null);
   const [imageName, setImageName] = useState("");
+  const [loggedInUserInfo, setLoggedInUserInfo] = useState(null);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
     if (loggedInUser.profileImage) {
       setImagePreview(loggedInUser.profileImage);
     }
+    setUserId(loggedInUser?.id);
+
+    setLoggedInUserInfo(loggedInUser.user_metadata);
   }, [loggedInUser]);
+
+  const updateUserInfo = async ({ formData }) => {
+    // const { data, error } = await supabase.auth.updateUser({
+    //   ...setLoggedInUserInfo,
+    //   data: formData,
+    // });
+
+    const { data: image, error: imageError } = await supabase.storage
+      .from("avatars")
+      .upload(`${imageName}`, image);
+
+    console.log(image);
+
+    // localStorage.setItem("loggedInUser", JSON.stringify(data.user));
+  };
 
   const resetForm = (form) => {
     form.reset({
@@ -33,7 +55,8 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
 
   const onSubmit = (values, form) => {
     const updatedValues = { ...values, profileImage: imagePreview };
-    dispatch(updateUserProfile(loggedInUser?.userId, updatedValues, blog));
+
+    updateUserInfo(updatedValues);
     resetForm(form);
     onSetEditProfileVisibility(false);
   };
@@ -43,23 +66,33 @@ const EditProfileForm = ({ onSetEditProfileVisibility }) => {
     onSetEditProfileVisibility(false);
   };
 
-  const handleImageDrop = (acceptedFiles) => {
+  const handleImageDrop = async (acceptedFiles) => {
     const file = acceptedFiles[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagePreview(reader.result);
-      setImageName(file.name);
-    };
-    reader.readAsDataURL(file);
+    const fileName = file.name;
+
+    const { data: image, error: imageError } = await supabase.storage
+      .from("avatars")
+      .upload(fileName, file);
+
+    // onUpload(filePath);
+    // setUploading(false);
+    // const reader = new FileReader();
+    // reader.onload = () => {
+    //   setImagePreview(reader.result);
+    //   setImageName(file.name);
+    // };
+    // reader.readAsDataURL(file);
   };
 
   return (
     <Form
-      onSubmit={(values, form) => onSubmit(values, form)}
+      onSubmit={(values, form) => {
+        onSubmit(values, form);
+      }}
       initialValues={{
-        fullName: loggedInUser?.fullName || "",
-        subtitle: loggedInUser?.subtitle || "",
-        about: loggedInUser?.about || "",
+        fullName: loggedInUserInfo?.fullName || "",
+        subtitle: loggedInUserInfo?.subtitle || "",
+        about: loggedInUserInfo?.about || "",
       }}
       render={({ handleSubmit, form }) => (
         <form className="edit-profile-form" onSubmit={handleSubmit}>

@@ -13,9 +13,13 @@ const Header = () => {
   const loggedInUser = useSelector((state) => state.auth.loggedInUser);
   const blogs = useSelector((state) => state.blog);
 
-  const handleLogout = () => {
-    dispatch(logoutUser());
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser());
+      navigate("/login");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   return (
@@ -29,7 +33,7 @@ const Header = () => {
           <div className="navbar__menu">
             Welcome
             <span className="navbar__user-name">
-              <Link to="/me">{loggedInUser?.fullName} !</Link>
+              <Link to="/me">{loggedInUser?.user_metadata?.firstName} !</Link>
             </span>
             <Button onClick={handleLogout} className="navbar__logout-btn">
               <img src={LogoutIcon} alt="Logout" />

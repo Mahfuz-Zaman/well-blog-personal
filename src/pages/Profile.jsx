@@ -13,13 +13,13 @@ import "@styles/common.scss";
 
 const Profile = () => {
   const { loggedInUser } = useSelector((state) => state.auth);
-  const blogs = useSelector((state) => state.blog);
+  // const blogs = useSelector((state) => state.blog);
   const [editProfileVisible, setEditProfileVisible] = useState(false);
   const [blogFormVisible, setBlogFormVisible] = useState(false);
 
-  const personalBlogs =
-    loggedInUser?.userName &&
-    blogs?.filter((blog) => blog.userId === loggedInUser?.userId);
+  // const personalBlogs =
+  //   loggedInUser?.userName &&
+  //   blogs?.filter((blog) => blog.userId === loggedInUser?.userId);
 
   const toggleEditProfileForm = () => {
     setEditProfileVisible((prevState) => !prevState);
@@ -54,13 +54,13 @@ const Profile = () => {
           onSetBlogFormVisibility={setBlogFormVisible}
         />
       )}
-      {personalBlogs.length > 0 && (
+      {/* {personalBlogs.length > 0 && (
         <div className="common-title-filter-holder">
           <h2>My published posts</h2>
           <FilterBlogs tags={tags} />
         </div>
-      )}
-      <BlogList blogs={personalBlogs} />
+      )} */}
+      {/* <BlogList blogs={personalBlogs} /> */}
     </div>
   );
 };
