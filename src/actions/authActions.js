@@ -4,7 +4,10 @@ import {
   LOGGEDOUT_USER,
   UPDATE_USER_PROFILE,
 } from "@constants/actionTypes";
-import supabase from "./../app/supabase";
+
+import { getSupabaseInstance } from "./../app/supabase";
+
+const supabase = getSupabaseInstance();
 
 export const registerUser = (user) => async (dispatch) => {
   try {
@@ -38,7 +41,6 @@ export const loginUser = (userData) => {
         email: userData.email,
         password: userData.password,
       });
-      console.log(data);
 
       if (error) {
         throw new Error(error.message);
@@ -103,7 +105,6 @@ export const logoutUser = () => async (dispatch) => {
     });
     localStorage.removeItem("loggedInUser");
   } catch (error) {
-    console.log(error);
     throw new Error("Failed to logout user: " + error.message);
   }
 };

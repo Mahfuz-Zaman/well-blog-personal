@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import defaultUserImage from "@assets/images/icons/defaultUserImage.svg";
+import getImagePath from "../../helpers/getImagePath";
+import formatDate from "./../../helpers/formatDate";
 import "@components/BlogCard/blogCard.scss";
 
 const BlogCard = ({ blog }) => {
@@ -22,12 +24,12 @@ const BlogCard = ({ blog }) => {
         <h3 className="blog-card__title">{title}</h3>
         <div className="blog-card__author-info">
           <img
-            src={creatorImage ? creatorImage : defaultUserImage}
+            src={getImagePath(creatorImage) || defaultUserImage}
             alt="Author"
             className="blog-card__author-image"
           />
           <p className="blog-card__author-name">{creatorFullName}</p>
-          <p className="blog-card__created-at">{createdAt}</p>
+          <p className="blog-card__created-at">{formatDate(createdAt)}</p>
         </div>
       </Link>
     </div>

@@ -18,7 +18,7 @@ const Header = () => {
       await dispatch(logoutUser());
       navigate("/login");
     } catch (error) {
-      console.error("Error logging out:", error);
+      throw error;
     }
   };
 

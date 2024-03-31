@@ -4,6 +4,9 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import Button from "@components/Button/Button";
 import Edit from "@assets/images/icons/Edit.svg";
+import defaultUserImage from "@assets/images/icons/defaultUserImage.svg";
+import getImagePath from "../../helpers/getImagePath";
+import formatDate from "./../../helpers/formatDate";
 import "@components/BlogDetails/blogDetails.scss";
 import "@styles/common.scss";
 
@@ -36,7 +39,7 @@ const BlogDetails = ({ blogDetails }) => {
           ))}
         </div>
         <div>
-          {loggedInUser.userId === userId && (
+          {loggedInUser && loggedInUser.id === userId && (
             <Button onClick={handleEditBlog}>
               <img src={Edit} alt="Edit Blog" />
             </Button>
@@ -47,12 +50,12 @@ const BlogDetails = ({ blogDetails }) => {
       <h3 className="blog-details__title">{title}</h3>
       <div className="blog-details__author-info">
         <img
-          src={creatorImage}
+          src={getImagePath(creatorImage) || defaultUserImage}
           alt="Author"
           className="blog-details__author-image"
         />
         <p className="blog-details__author-name">{creatorFullName}</p>
-        <p className="blog-details__created-at">{createdAt}</p>
+        <p className="blog-details__created-at">{formatDate(createdAt)}</p>
       </div>
       <img
         src={BannerImage}

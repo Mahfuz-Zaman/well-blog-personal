@@ -2,6 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import defaultUserImage from "@assets/images/icons/defaultUserImage.svg";
+import getImagePath from "../../helpers/getImagePath";
+import formatDate from "./../../helpers/formatDate";
 import "@components/HomeBanner/homeBanner.scss";
 
 const HomeBanner = ({ blog }) => {
@@ -30,7 +33,7 @@ const HomeBanner = ({ blog }) => {
           </div>
           <div className={`${wrapperClassName}-identity`}>
             <img
-              src={creatorImage}
+              src={getImagePath(creatorImage) || defaultUserImage}
               alt="Author"
               className={`${wrapperClassName}-identity-image`}
             />
@@ -38,7 +41,7 @@ const HomeBanner = ({ blog }) => {
               {creatorFullName}
             </p>
             <p className={`${wrapperClassName}-identity-created-at`}>
-              {createdAt}
+              {formatDate(createdAt)}
             </p>
           </div>
         </div>

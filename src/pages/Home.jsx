@@ -1,9 +1,10 @@
+import { fetchBlogs } from "@actions/blogActions";
 import BlogList from "@components/BlogList/BlogList";
 import FilterBlogs from "@components/FilterBlogs/FilterBlogs";
 import HomeBanner from "@components/HomeBanner/HomeBanner";
 import NotFound from "@components/NotFound/NotFound";
 import tags from "@constants/tags.json";
-import { fetchBlogs } from "@reducers/blogReducer";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,15 +18,15 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className='container'>
+    <div className="container">
       {loggedInUser ? (
         <>
           {blogs.length === 0 ? (
-            <NotFound text='Please add a blog post' />
+            <NotFound text="Please add a blog post" />
           ) : (
             <>
               <HomeBanner blog={blogs[0]} />
-              <div className='common-title-filter-holder'>
+              <div className="common-title-filter-holder">
                 <h2>Latest Posts</h2>
                 <FilterBlogs tags={tags} />
               </div>
@@ -36,11 +37,11 @@ const Home = () => {
       ) : (
         <>
           {blogs.length === 0 ? (
-            <NotFound text='Please Log In or Signup' />
+            <NotFound text="Please Log In or Signup" />
           ) : (
             <>
               <HomeBanner blog={blogs[0]} />
-              <div className='common-title-filter-holder'>
+              <div className="common-title-filter-holder">
                 <h2>Latest Posts</h2>
                 <FilterBlogs tags={tags} />
               </div>

@@ -25,7 +25,7 @@ const router = createBrowserRouter(
       <Route index path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/me" element={<ProtectedRoute element={<Profile />} />} />
-      <Route path="/blog/:id" element={<ProtectedRoute element={<Blog />} />} />
+      <Route path="/blog/:id" element={<Blog />} />
       <Route
         path="/edit-blog/:blogId"
         element={<ProtectedRoute element={<EditBlog />} />}

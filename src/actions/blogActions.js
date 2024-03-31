@@ -1,138 +1,44 @@
-// import { v4 as uuidv4 } from "uuid";
-// import {
-//   ADD_BLOG_POST,
-//   EDIT_BLOG_POST,
-//   GET_BLOG_POSTS,
-//   SEARCH_BLOG_POSTS,
-//   FILTER_BY_TAG,
-// } from "@constants/actionTypes";
-
-// export const addBlog = (post) => {
-//   return (dispatch) => {
-//     try {
-//       const id = uuidv4();
-//       const createdAt = new Date().toLocaleDateString("en-US", {
-//         month: "long",
-//         day: "2-digit",
-//         year: "numeric",
-//       });
-//       const postWithId = {
-//         ...post,
-//         id,
-//         createdAt,
-//       };
-
-//       dispatch({
-//         type: ADD_BLOG_POST,
-//         payload: postWithId,
-//       });
-
-//       const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-//       const updatedPosts = [postWithId, ...existingPosts];
-//       localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
-//     } catch (error) {
-//       throw new Error("Error adding blog post: " + error.message);
-//     }
-//   };
-// };
-
-// export const getBlogPostsFromLocalStorage = () => {
-//   return (dispatch) => {
-//     try {
-//       const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-//       dispatch({
-//         type: GET_BLOG_POSTS,
-//         payload: existingPosts,
-//       });
-//     } catch (error) {
-//       throw new Error(
-//         "Error getting blog posts from local storage: " + error.message
-//       );
-//     }
-//   };
-// };
-
-// export const updateBlog = (postId, updatedPost) => {
-//   return (dispatch) => {
-//     try {
-//       dispatch({
-//         type: EDIT_BLOG_POST,
-//         payload: { postId, updatedPost },
-//       });
-
-//       const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-//       const updatedPosts = existingPosts?.map((post) =>
-//         post.id === postId ? updatedPost : post
-//       );
-//       localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
-//     } catch (error) {
-//       throw new Error("Error updating blog post: " + error.message);
-//     }
-//   };
-// };
-
-// export const searchBlogPosts = (searchQuery) => {
-//   return {
-//     type: SEARCH_BLOG_POSTS,
-//     payload: searchQuery,
-//   };
-// };
-
-// export const filterByTags = (tags) => ({
-//   type: FILTER_BY_TAG,
-//   payload: tags,
-// });
-
-import { v4 as uuidv4 } from "uuid";
 import {
-  ADD_BLOG_POST,
-  EDIT_BLOG_POST,
   GET_BLOG_POSTS,
   SEARCH_BLOG_POSTS,
   FILTER_BY_TAG,
 } from "@constants/actionTypes";
 
-export const addBlog = (post) => {
-  return (dispatch) => {
+import { getSupabaseInstance } from "./../app/supabase";
+
+const supabase = getSupabaseInstance();
+
+export const fetchBlogs = () => {
+  return async (dispatch) => {
     try {
-      const id = uuidv4();
-      const createdAt = new Date().toLocaleDateString("en-US", {
-        month: "long",
-        day: "2-digit",
-        year: "numeric",
-      });
-      const postWithId = {
-        ...post,
-        id,
-        createdAt,
-      };
+      const { data, error } = await supabase
+        .from("blogs")
+        .select("*")
+        .order("createdAt", { ascending: false });
 
-      dispatch({
-        type: ADD_BLOG_POST,
-        payload: postWithId,
-      });
+      if (error) {
+        throw new Error(error.message);
+      }
 
-      const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-      const updatedPosts = [postWithId, ...existingPosts];
-      localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
+      dispatch(getBlogs(data));
     } catch (error) {
-      throw new Error("Error adding blog post: " + error.message);
+      throw error;
     }
   };
 };
 
-export const getBlogPostsFromLocalStorage = () => {
-  return (dispatch) => {
+export const createBlogPost = (blog) => {
+  return async (dispatch) => {
     try {
-      const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-      dispatch({
-        type: GET_BLOG_POSTS,
-        payload: existingPosts,
-      });
+      const { error } = await supabase.from("blogs").insert([blog]);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      dispatch(fetchBlogs());
     } catch (error) {
-      throw new Error(
-        "Error getting blog posts from local storage: " + error.message
-      );
+      throw error;
     }
   };
 };
@@ -142,22 +48,21 @@ export const getBlogs = (posts) => ({
   payload: posts,
 });
 
-
-export const updateBlog = (postId, updatedPost) => {
-  return (dispatch) => {
+export const updateBlogPost = (blogId, updatedBlogData) => {
+  return async (dispatch) => {
     try {
-      dispatch({
-        type: EDIT_BLOG_POST,
-        payload: { postId, updatedPost },
-      });
+      const { error } = await supabase
+        .from("blogs")
+        .update(updatedBlogData)
+        .eq("id", blogId);
 
-      const existingPosts = JSON.parse(localStorage.getItem("blogPosts")) || [];
-      const updatedPosts = existingPosts?.map((post) =>
-        post.id === postId ? updatedPost : post
-      );
-      localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      dispatch(fetchBlogs());
     } catch (error) {
-      throw new Error("Error updating blog post: " + error.message);
+      throw error;
     }
   };
 };
